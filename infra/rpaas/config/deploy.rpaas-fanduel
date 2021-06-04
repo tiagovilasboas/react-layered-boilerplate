@@ -1,0 +1,9 @@
+# RPAAS FANDUEL
+
+type="rpaas"
+service="rpaasv2-fe-rjdev"
+instance="cartola-kyc-fanduel"
+rpaas_config="http:http.conf;server:server.conf;route:location.conf"
+
+export APP_ADDRESS="cartola-kyc-fanduel.gcloud.dev.globoi.com"
+export REAL_ADDRESS="compliance.cartolaexpress.fanduel.globoi.com"

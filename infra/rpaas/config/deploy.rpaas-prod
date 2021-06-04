@@ -1,0 +1,9 @@
+# RPAAS PROD
+
+type="rpaas"
+service="rpaasv2-fe-cme"
+instance="cartola-kyc"
+rpaas_config="http:http.conf;server:server.conf;route:location.conf"
+
+export APP_ADDRESS="cartola-kyc-prod.gcloud-cme.globoi.com"
+export REAL_ADDRESS="compliance.cartolaexpress.globo.com"

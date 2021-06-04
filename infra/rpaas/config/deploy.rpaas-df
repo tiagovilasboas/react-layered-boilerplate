@@ -1,0 +1,9 @@
+# RPAAS DAILY FANTASY
+
+type="rpaas"
+service="rpaasv2-fe-cme"
+instance="cartola-kyc-staging"
+rpaas_config="http:http.conf;server:server.conf;route:location.conf"
+
+export APP_ADDRESS="cartola-kyc-df.gcloud-cme.globoi.com"
+export REAL_ADDRESS="compliance.cartolaexpress.df.globo.com"
