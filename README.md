@@ -20,8 +20,10 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 
 
 ## Regra de dependência
-![img](https://i.imgur.com/nkpyvgT.png)
 
+---
+
+![img](https://i.imgur.com/nkpyvgT.png)
 
 
 ## Instalação
@@ -44,7 +46,7 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 
 **Produção**
 
-`npm run start`
+`npm run prod`
 
 - "Build" do app (HMR desabilitado) em `/dist/`
 - @ `http://localhost:8888`
