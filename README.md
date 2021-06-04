@@ -17,6 +17,12 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 - Testes unitários com ([Jest](https://facebook.github.io/jest/)) e testes em componentes com [DOM Test Library](https://testing-library.com/docs/)
 - Análise de commits ([Husky](https://typicode.github.io/husky/#/))
 
+
+## Regra de dependência
+![img](https://i.imgur.com/nkpyvgT.png)
+
+
+
 ## Instalação
 
 ---
