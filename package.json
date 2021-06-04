@@ -38,6 +38,7 @@
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
+    "husky": "^6.0.0",
     "image-webpack-loader": "^7.0.1",
     "jest": "^27.0.1",
     "prettier": "^2.3.0",
@@ -52,8 +53,5 @@
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
-  },
-  "dependencies": {
-    "husky": "^6.0.0"
   }
 }

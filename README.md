@@ -12,10 +12,11 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 - [Hot Module Replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/) ([React Hot Loader](https://github.com/gaearon/react-hot-loader))
 - Build p/ produção (Webpack)
 - Otimização de imagens ([Image Webpack Loader](https://github.com/tcoopman/image-webpack-loader))
-- Arquitetura de estilos modular (com autoprefixer p/ cross-browser) [Styled-components](https://styled-components.com/docs/)
+- [Styled-components](https://styled-components.com/docs/) (com autoprefixer p/ cross-browser)
 - Estabilização de código com ([ESLint](https://github.com/eslint/eslint)) e formatação com ([Prettier](https://github.com/prettier/prettier))
 - Testes unitários com ([Jest](https://facebook.github.io/jest/)) e testes em componentes com [DOM Test Library](https://testing-library.com/docs/)
 - Análise de commits ([Husky](https://typicode.github.io/husky/#/))
+- Servidor Web ([Express](https://expressjs.com/pt-br/))
 
 
 ## Regra de dependência
