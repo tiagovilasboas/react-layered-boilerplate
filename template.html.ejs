@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>React Layered Architecture Boilerplate</title>
+    </head>
+    <body>
+        <div id="main"></div>
+
+        <!-- Dependencies with Oficial CDN Links -->
+        <!-- https://pt-br.reactjs.org/docs/cdn-links.html#gatsby-focus-wrapper -->
+        <% if (webpackConfig.mode == 'production') { %>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <% } else { %>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <% } %>
+    </body>
+</html>

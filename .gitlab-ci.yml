@@ -1,0 +1,83 @@
+include:
+  - project: "globocom/gitlab-ci-files"
+    ref: master
+    file: "/templates/gitlab-ci-basic.yml"
+  - project: "globocom/gitlab-ci-files"
+    ref: master
+    file: "/templates/jobs/tsuru-deploy.yml"
+
+stages:
+  - test
+  - codeQuality
+  - build
+  - deploy
+
+lint:
+  stage: test
+  image: docker.artifactory.globoi.com/devops/python-node-workspace:v5
+  before_script:
+    - source $NVM_DIR/nvm.sh
+    - nvm install 14.17.0
+    - nvm use 14.17.0
+    - npm install
+  script:
+    - npm run lint
+
+test:
+  image: docker.artifactory.globoi.com/devops/python-node-workspace:v5
+  before_script:
+    - source $NVM_DIR/nvm.sh
+    - nvm install 14.17.0
+    - nvm use 14.17.0
+    - npm install
+  script:
+    - npm run test
+
+huskyCI:
+  stage: test
+  
+codeQuality:
+  stage: codeQuality
+  allow_failure: true
+
+build:
+  stage: build
+  image: docker.artifactory.globoi.com/devops/python-node-workspace:v5
+  before_script:
+    - source $NVM_DIR/nvm.sh
+    - nvm install 14.17.0
+    - nvm use 14.17.0
+    - npm install
+  script: 
+    - npm run build
+  artifacts:
+    expire_in: 1 days
+    paths:
+      - dist
+      - node_modules
+
+deploy_dev:
+  stage: deploy
+  extends: .deploy_tsuru
+  variables:
+    APP_NAME: cartola-kyc-dev
+  when: manual
+
+deploy_qa:
+  stage: deploy
+  extends: .deploy_tsuru
+  variables:
+    APP_NAME: cartola-kyc-qa
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+
+deploy_prod:
+  stage: deploy
+  extends: .deploy_tsuru
+  variables:
+    APP_NAME: cartola-kyc-prod
+  only:
+    - master
