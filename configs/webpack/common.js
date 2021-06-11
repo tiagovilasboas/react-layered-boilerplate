@@ -7,15 +7,16 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@': path.join(__dirname, '../../src'),
-      '!': path.join(__dirname, '.'),
     },
   },
   module: {
     rules: [
       {
-        test: [/\.jsx?$/, /\.tsx?$/],
-        use: ['babel-loader'],
-        exclude: /node_modules/,
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+        },
       },
       {
         test: /\.css$/,
@@ -23,10 +24,10 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [
-          'file-loader?hash=sha512&digest=hex&name=img/[contenthash].[ext]',
-          'image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false',
-        ],
+        loader: 'file-loader',
+        options: {
+          name: 'imgs/[contenthash].[ext]',
+        },
       },
     ],
   },
