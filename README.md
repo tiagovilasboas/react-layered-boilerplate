@@ -23,6 +23,34 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 
 ![img](https://i.imgur.com/nkpyvgT.png)
 
+## Proposta de Arquitetura
+
+---
+
+Pensando na escalabilidade do projeto, sem trazer complicações e Over engineering, pensei em trazer um modelo de arquitetura para o frontend do boilerplate.
+Indo direto ao ponto, esse é o modelo:
+
+```javascript
+src
+├── components  # Componentes globais de uso geral do projeto.
+├── layout      # Wrappers padrões para componentes ou páginas.
+├── hooks       # Hooks globais de uso geral do projeto.
+├── contexts    # Contexts para gerenciamento de estado global do projeto.
+├── modules     # Módulos. Um para cada página, com a lógica de negócio.
+│    └─ example-module
+│         ├──  index.js/ts  # Ponto de partida desse módulo.
+│         ├──  hooks        # Hooks globais de uso exclusivo desse módulo.
+│         ├──  components   # Componentes de uso exclusivo desse módulo.
+│         ├──  service      # Funções e lógicas de utilização geral e genérica
+│         └──  utils        # Componentes de uso exclusivo desse módulo.
+├── pages       # Cada página associada com uma rota e um módulo.
+├── services    # Lógica de comunicação com o backend.
+├── shared      # Tudo que for compartilhável. Sendo configuração de temas, etc.
+└── utils       # Funções e lógicas de utilização geral e genérica.
+```
+
+Obs: Essa estrutura interna aos Módulos é opcional e pode ser criada mediante necessidade, precisando inicialmente só do index.js/ts§
+
 ## Instalação
 
 ---
