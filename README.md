@@ -126,6 +126,38 @@ Cada módulo expõe apenas seu `index.ts`, mantendo implementação privada.
 
 Essa segmentação permite escalar adicionando novas features sem criar pastas "god-objects".
 
+### Dependency Rule (Clean Architecture)
+
+Segundo a Clean Architecture, dependências devem sempre apontar **para dentro**, nunca para fora. No contexto deste boilerplate:
+
+- Components → não importam Services.
+- Hooks → podem importar Services, nunca Pages.
+- Services (Repositories) → não importam nada de UI, apenas `fetch`/`axios` e tipos.
+
+Isso garante que detalhes (UI, frameworks, libs) dependam da regra de negócio — e não o inverso.
+
+Exemplo prático:
+
+```ts
+// ❌ Errado – UI conhecendo detalhes de fetch
+import { getUsers } from '@/modules/user/service/userRepository';
+
+export const UserCard = () => {
+  const users = await getUsers();
+  // ...
+};
+
+// ✅ Correto – Hook abstrai a origem dos dados
+import { useUsers } from '@/modules/user/hooks/useUser';
+
+export const UserCard = () => {
+  const { users } = useUsers();
+  // ...
+};
+```
+
+Dessa forma, se `userRepository` trocar `fetch` por GraphQL ou IndexedDB, **nenhum componente** precisará mudar.
+
 ## 🤝 Contribuindo
 
 1. Faça um fork do projeto
