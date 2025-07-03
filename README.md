@@ -93,6 +93,39 @@ eslint.config.js
 package.json
 ```
 
+## 🏛️ Arquitetura em Camadas
+
+Este boilerplate segue o princípio **SRP (Single-Responsibility Principle)** e organiza o código em **camadas horizontais** que se comunicam de fora para dentro:
+
+1. **Pages** – composition root. Responsáveis por roteamento e composição de módulos/ componentes. Sem lógica de negócio.
+2. **Modules (features)** – pastas autocontidas que agrupam:
+   - `components/` – widgets específicos da feature
+   - `hooks/` – regras de UI / estado da feature
+   - `service/` – camada _Repository_: integra a feature a APIs ou IndexedDB/localStorage, convertendo DTO ⇄ model
+   - `utils/` – helpers puros
+3. **Shared / Core** – utilitários, temas, tipos que podem ser usados por qualquer módulo.
+
+➡️ A regra de ouro: **código interno nunca importa direto de uma camada externa**. Exemplo: `service` não importa de `components`.
+
+### Exemplo de módulo
+
+```
+src/modules/user/
+  components/
+    UserCard.tsx
+  hooks/
+    useUser.ts
+  service/
+    userRepository.ts    # fetch/<=>cache
+  utils/
+    userFormatters.ts
+  index.ts               # re-export público
+```
+
+Cada módulo expõe apenas seu `index.ts`, mantendo implementação privada.
+
+Essa segmentação permite escalar adicionando novas features sem criar pastas "god-objects".
+
 ## 🤝 Contribuindo
 
 1. Faça um fork do projeto
