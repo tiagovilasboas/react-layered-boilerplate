@@ -1,97 +1,122 @@
-## React Layered Architecture Boilerplate
+# React Layered Boilerplate
 
-Arquitetura client-side escalável, distribuída em camadas, com o objetivo de promover uma arquitetura front-end que favoreça a reusabilidade de código, coesão, independência de tecnologia e testabilidade. .
+Um boilerplate moderno, minimalista e escalável para aplicações React com TypeScript, Webpack, Styled-components, Vitest, ESLint e Prettier.
 
-## Stacks
+## ✨ Tecnologias
 
----
+- [React 19](https://react.dev/)
+- [TypeScript 5](https://www.typescriptlang.org/)
+- [Webpack 5](https://webpack.js.org/)
+- [Styled-components 6](https://styled-components.com/)
+- [Vitest](https://vitest.dev/) (testes)
+- [ESLint](https://eslint.org/) (lint)
+- [Prettier](https://prettier.io/) (formatação)
 
-- [React](https://facebook.github.io/react/) (17.x)
-- [Webpack](https://webpack.js.org/) (5.x)
-- [Typescript](https://www.typescriptlang.org/) (4.x)
-- [Hot Module Replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/) ([React Hot Loader](https://github.com/gaearon/react-hot-loader))
-- Build p/ produção (Webpack)
-- [Styled-components](https://styled-components.com/docs/) (com autoprefixer p/ cross-browser)
-- Estabilização de código com ([ESLint](https://github.com/eslint/eslint)) e formatação com ([Prettier](https://github.com/prettier/prettier))
-- Testes unitários com ([Jest](https://facebook.github.io/jest/)) e testes em componentes com [DOM Test Library](https://testing-library.com/docs/)
-- Análise de commits ([Husky](https://typicode.github.io/husky/#/))
-- Servidor Web ([Express](https://expressjs.com/pt-br/))
+## 🚀 Requisitos
 
-## Regra de dependência
+- Node.js 20+ (use `.nvmrc` para garantir a versão)
+- npm 8+
 
----
+## 🚀 Começando Rápido
 
-![img](https://i.imgur.com/nkpyvgT.png)
+```bash
+# clone o repositório
+git clone https://github.com/tiagovilasboas/react-layered-boilerplate.git
 
-## Proposta de Arquitetura
+# entre na pasta
+cd react-layered-boilerplate
 
----
+# instale as dependências
+npm install # ou pnpm install / yarn
 
-Pensando na escalabilidade do projeto, sem trazer complicações e Over engineering, pensei em trazer um modelo de arquitetura para o frontend do boilerplate.
-Indo direto ao ponto, esse é o modelo:
-
-```javascript
-src
-├── components  # Componentes globais de uso geral do projeto.
-├── layout      # Wrappers padrões para componentes ou páginas.
-├── hooks       # Hooks globais de uso geral do projeto.
-├── contexts    # Contexts para gerenciamento de estado global do projeto.
-├── modules     # Módulos. Um para cada página, com a lógica de negócio.
-│    └─ example-module
-│         ├──  index.js/ts  # Ponto de partida desse módulo.
-│         ├──  hooks        # Hooks globais de uso exclusivo desse módulo.
-│         ├──  components   # Componentes de uso exclusivo desse módulo.
-│         ├──  service      # Funções e lógicas de utilização geral e genérica
-│         └──  utils        # Componentes de uso exclusivo desse módulo.
-├── pages       # Cada página associada com uma rota e um módulo.
-├── services    # Lógica de comunicação com o backend.
-├── shared      # Tudo que for compartilhável. Sendo configuração de temas, etc.
-└── utils       # Funções e lógicas de utilização geral e genérica.
+# rode em modo desenvolvimento
+npm run dev
 ```
 
-Obs: Essa estrutura interna aos Módulos é opcional e pode ser criada mediante necessidade, precisando inicialmente só do index.js/ts§
+## 🏗️ Build de Produção
 
-## Instalação
+```bash
+# gera artefatos em dist/
+npm run build
+
+# opcional: sirva o build localmente
+npx serve ./dist
+```
+
+## ⚡ Instalação
+
+```bash
+npm install
+```
+
+## 🛠️ Scripts principais
+
+```bash
+npm run dev       # Inicia o servidor de desenvolvimento
+npm run build     # Gera o build de produção
+npm test          # Executa os testes com cobertura
+npm run lint      # Executa o lint
+npm run format    # Formata o código com Prettier
+npm run type-check # Checa os tipos TypeScript
+```
+
+## 🔗 Alias de importação
+
+Graças à configuração de `tsconfig.json` e `webpack`, você pode importar usando aliases, por exemplo:
+
+```ts
+import { Button } from '@/components/Button';
+```
+
+Isso evita caminhos relativos longos e facilita a refatoração.
+
+## 📁 Estrutura mínima
+
+```
+src/
+  components/
+  hooks/
+  modules/
+  pages/
+  assets/
+  setupTests.ts
+  ...
+configs/
+  webpack/
+    dev.js
+    prod.js
+    common.js
+vitest.config.ts
+webpack.config.js
+eslint.config.js
+.prettierrc
+package.json
+```
+
+## 🤝 Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature: `git checkout -b minha-feature`
+3. Commit suas mudanças: `git commit -m 'feat: Minha nova feature'`
+4. Faça push da sua branch: `git push origin minha-feature`
+5. Abra um Pull Request
+
+Contribuições são muito bem-vindas! 💜
+
+## 📄 Licença
+
+Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
+
+## 🧪 Testes
+
+- Os testes utilizam [Vitest](https://vitest.dev/) e [Testing Library](https://testing-library.com/).
+- Arquivo de setup: `src/setupTests.ts` (mocks globais)
+
+## 💡 Observações
+
+- O boilerplate é intencionalmente enxuto. Ferramentas como Docker, CI/CD, análise de bundle e deploy devem ser adicionadas conforme a necessidade do projeto.
+- Sinta-se à vontade para adaptar a estrutura de pastas conforme o crescimento da aplicação.
 
 ---
 
-1. Clone/download do repositório
-2. `npm install typescript -g` (p/ desenvolvimento)
-3. `npm install`
-
-## Como usar
-
----
-
-**Desenvolvimento**
-
-`npm run start`
-
-- "Build" do app (HMR habilitado)
-- @ `http://localhost:8080`
-
-**Produção**
-
-`npm run prod`
-
-- "Build" do app (HMR desabilitado) em `/dist/`
-- @ `http://localhost:8888`
-
----
-
-**Comandos**
-
-| Comando            | Descrição                                                                       |
-| ------------------ | ------------------------------------------------------------------------------- |
-| `npm run dev`      | Sobe a "app" com hot reload e serve em @ `http://localhost:8080`                |
-| `npm run prod`     | Empacota a "app" para produção em `/dist/` e serve em @ `http://localhost:8888` |
-| `npm run build`    | Empacota a "app" `/dist/`                                                       |
-| `npm run test`     | Dispara a rotina de testes                                                      |
-| `npm run test:dev` | Dispara a rotina de testes com "watch reload"                                   |
-| `npm run lint`     | Roda o analisador de código (eslint)                                            |
-| `npm run lint:fix` | Roda o analisador de código e corrige as "issues"                               |
-| `npm run start`    | ("alias" para `npm run dev`)                                                    |
-
----
-
-**Nota**: caso tenha preferência em usar o `yarn`, substituía o `npm` para `yarn` no `package.json`, .
+Feito com 💙 por [Tiago Vilas Boas](https://github.com/tiagovilasboas)
