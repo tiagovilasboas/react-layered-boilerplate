@@ -1,21 +1,22 @@
 # React Layered Boilerplate
 
+[![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
+[![Webpack](https://img.shields.io/badge/Webpack-5-blue.svg)](https://webpack.js.org/)
+[![Vitest](https://img.shields.io/badge/Vitest-Testing-orange.svg)](https://vitest.dev/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 Um boilerplate moderno, minimalista e escalável para aplicações React com TypeScript, Webpack, Styled-components, Vitest, ESLint e Prettier.
 
-## ✨ Tecnologias
+## 📋 Índice
 
-- [React 19](https://react.dev/)
-- [TypeScript 5](https://www.typescriptlang.org/)
-- [Webpack 5](https://webpack.js.org/)
-- [Styled-components 6](https://styled-components.com/)
-- [Vitest](https://vitest.dev/) (testes)
-- [ESLint](https://eslint.org/) (lint)
-- [Prettier](https://prettier.io/) (formatação)
-
-## 🚀 Requisitos
-
-- Node.js 20+ (use `.nvmrc` para garantir a versão)
-- npm 8+
+- [🚀 Começando Rápido](#-começando-rápido)
+- [✨ Tecnologias](#-tecnologias)
+- [🏛️ Arquitetura em Camadas](#️-arquitetura-em-camadas)
+- [🛠️ Scripts](#️-scripts)
+- [📁 Estrutura](#-estrutura)
+- [🤝 Contribuindo](#-contribuindo)
 
 ## 🚀 Começando Rápido
 
@@ -33,69 +34,56 @@ npm install # ou pnpm install / yarn
 npm run dev
 ```
 
-## 🏗️ Build de Produção
+## ✨ Tecnologias
 
-```bash
-# gera artefatos em dist/
-npm run build
-
-# opcional: sirva o build localmente
-npx serve ./dist
-```
-
-## ⚡ Instalação
-
-```bash
-npm install
-```
-
-## 🛠️ Scripts principais
-
-```bash
-npm run dev       # Inicia o servidor de desenvolvimento
-npm run build     # Gera o build de produção
-npm test          # Executa os testes com cobertura
-npm run lint      # Executa o lint
-npm run format    # Formata o código com Prettier
-npm run type-check # Checa os tipos TypeScript
-```
-
-## 🔗 Alias de importação
-
-Graças à configuração de `tsconfig.json` e `webpack`, você pode importar usando aliases, por exemplo:
-
-```ts
-import { Button } from '@/components/Button';
-```
-
-Isso evita caminhos relativos longos e facilita a refatoração.
-
-## 📁 Estrutura mínima
-
-```
-src/
-  components/
-  hooks/
-  modules/
-  pages/
-  assets/
-  setupTests.ts
-  ...
-configs/
-  webpack/
-    dev.js
-    prod.js
-    common.js
-vitest.config.ts
-webpack.config.js
-eslint.config.js
-.prettierrc
-package.json
-```
+| Tecnologia                                          | Versão | Descrição                  |
+| --------------------------------------------------- | ------ | -------------------------- |
+| [React](https://react.dev/)                         | 19     | Biblioteca para interfaces |
+| [TypeScript](https://www.typescriptlang.org/)       | 5      | Tipagem estática           |
+| [Webpack](https://webpack.js.org/)                  | 5      | Bundler e dev server       |
+| [Styled-components](https://styled-components.com/) | 6      | CSS-in-JS                  |
+| [Vitest](https://vitest.dev/)                       | 3      | Testes unitários           |
+| [ESLint](https://eslint.org/)                       | 9      | Linter                     |
+| [Prettier](https://prettier.io/)                    | 3      | Formatação                 |
 
 ## 🏛️ Arquitetura em Camadas
 
 Este boilerplate segue o princípio **SRP (Single-Responsibility Principle)** e organiza o código em **camadas horizontais** que se comunicam de fora para dentro:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        PAGES                                │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────┐ │
+│  │   Home Page     │  │   User Page     │  │ About Page  │ │
+│  │  (Composition)  │  │  (Composition)  │  │(Composition)│ │
+│  └─────────────────┘  └─────────────────┘  └─────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      MODULES                                │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────┐ │
+│  │   User Module   │  │  Auth Module    │  │ Shop Module │ │
+│  │ ┌─────────────┐ │  │ ┌─────────────┐ │  │┌───────────┐│ │
+│  │ │ Components  │ │  │ │ Components  │ │  ││Components ││ │
+│  │ │   Hooks     │ │  │ │   Hooks     │ │  ││  Hooks    ││ │
+│  │ │  Services   │ │  │ │  Services   │ │  ││ Services  ││ │
+│  │ │   Utils     │ │  │ │   Utils     │ │  ││  Utils    ││ │
+│  │ └─────────────┘ │  │ └─────────────┘ │  │└───────────┘│ │
+│  └─────────────────┘  └─────────────────┘  └─────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      SHARED                                 │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────┐ │
+│  │   Components    │  │     Hooks       │  │    Utils    │ │
+│  │   (Global)      │  │   (Global)      │  │  (Global)   │ │
+│  └─────────────────┘  └─────────────────┘  └─────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Camadas e Responsabilidades
 
 1. **Pages** – composition root. Responsáveis por roteamento e composição de módulos/ componentes. Sem lógica de negócio.
 2. **Modules (features)** – pastas autocontidas que agrupam:
@@ -111,15 +99,16 @@ Este boilerplate segue o princípio **SRP (Single-Responsibility Principle)** e 
 
 ```
 src/modules/user/
-  components/
-    UserCard.tsx
-  hooks/
-    useUser.ts
-  service/
-    userRepository.ts    # fetch/<=>cache
-  utils/
-    userFormatters.ts
-  index.ts               # re-export público
+├── components/
+│   ├── UserCard.tsx
+│   └── UserList.tsx
+├── hooks/
+│   └── useUser.ts
+├── service/
+│   └── userRepository.ts    # fetch/<=>cache
+├── utils/
+│   └── userFormatters.ts
+└── index.ts                 # re-export público
 ```
 
 Cada módulo expõe apenas seu `index.ts`, mantendo implementação privada.
@@ -129,6 +118,15 @@ Essa segmentação permite escalar adicionando novas features sem criar pastas "
 ### Dependency Rule (Clean Architecture)
 
 Segundo a Clean Architecture, dependências devem sempre apontar **para dentro**, nunca para fora. No contexto deste boilerplate:
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Components    │    │     Hooks       │    │    Services     │
+│                 │    │                 │    │   (Repository)  │
+│  ❌ Não importa │    │  ✅ Pode importar│    │  ❌ Não importa │
+│     Services    │    │     Services    │    │     UI/Pages    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
 - Components → não importam Services.
 - Hooks → podem importar Services, nunca Pages.
@@ -158,6 +156,70 @@ export const UserCard = () => {
 
 Dessa forma, se `userRepository` trocar `fetch` por GraphQL ou IndexedDB, **nenhum componente** precisará mudar.
 
+## 🛠️ Scripts
+
+| Comando              | Descrição                            |
+| -------------------- | ------------------------------------ |
+| `npm run dev`        | Inicia o servidor de desenvolvimento |
+| `npm run build`      | Gera o build de produção             |
+| `npm test`           | Executa os testes com cobertura      |
+| `npm run lint`       | Executa o lint                       |
+| `npm run format`     | Formata o código com Prettier        |
+| `npm run type-check` | Checa os tipos TypeScript            |
+
+## 🏗️ Build de Produção
+
+```bash
+# gera artefatos em dist/
+npm run build
+
+# opcional: sirva o build localmente
+npx serve ./dist
+```
+
+## 🔗 Alias de importação
+
+Graças à configuração de `tsconfig.json` e `webpack`, você pode importar usando aliases, por exemplo:
+
+```ts
+import { Button } from '@/components/Button';
+```
+
+Isso evita caminhos relativos longos e facilita a refatoração.
+
+## 📁 Estrutura
+
+```
+src/
+├── components/          # Componentes compartilhados
+├── hooks/              # Hooks compartilhados
+├── modules/            # Módulos de features
+│   └── example-module/
+│       ├── components/
+│       ├── hooks/
+│       ├── service/
+│       ├── utils/
+│       └── index.ts
+├── pages/              # Páginas (composition root)
+├── assets/             # Imagens, ícones, etc.
+├── types/              # Tipos TypeScript
+└── setupTests.ts       # Setup dos testes
+
+configs/
+├── webpack/
+│   ├── dev.js
+│   ├── prod.js
+│   └── common.js
+├── vitest.config.ts
+├── eslint.config.js
+└── .prettierrc
+```
+
+## 🧪 Testes
+
+- Os testes utilizam [Vitest](https://vitest.dev/) e [Testing Library](https://testing-library.com/).
+- Arquivo de setup: `src/setupTests.ts` (mocks globais)
+
 ## 🤝 Contribuindo
 
 1. Faça um fork do projeto
@@ -172,10 +234,7 @@ Contribuições são muito bem-vindas! 💜
 
 Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
-## 🧪 Testes
-
-- Os testes utilizam [Vitest](https://vitest.dev/) e [Testing Library](https://testing-library.com/).
-- Arquivo de setup: `src/setupTests.ts` (mocks globais)
+---
 
 ## 💡 Observações
 
