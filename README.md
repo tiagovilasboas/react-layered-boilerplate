@@ -128,33 +128,99 @@ Segundo a Clean Architecture, dependências devem sempre apontar **para dentro**
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-- Components → não importam Services.
-- Hooks → podem importar Services, nunca Pages.
-- Services (Repositories) → não importam nada de UI, apenas `fetch`/`axios` e tipos.
+**Fluxo de Dados Correto:**
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Component │───▶│    Hook     │───▶│ Repository  │───▶│    API      │
+│             │    │             │    │             │    │             │
+│  (UI Layer) │    │ (Logic Layer)│    │(Data Layer) │    │(External)   │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+```
+
+**Regras de Dependência:**
+
+- **Components** → não importam Services diretamente
+- **Hooks** → podem importar Services, nunca Pages
+- **Services (Repositories)** → não importam nada de UI, apenas `fetch`/`axios` e tipos
 
 Isso garante que detalhes (UI, frameworks, libs) dependam da regra de negócio — e não o inverso.
 
-Exemplo prático:
+#### Exemplo Prático Implementado
+
+**1. Repository (Data Layer):**
 
 ```ts
-// ❌ Errado – UI conhecendo detalhes de fetch
-import { getUsers } from '@/modules/user/service/userRepository';
+// src/modules/example-module/service/exampleService.ts
+export interface ExampleRepository {
+  fetchData(): Promise<ExampleData[]>;
+  createData(data: Omit<ExampleData, 'id' | 'createdAt'>): Promise<ExampleData>;
+}
 
-export const UserCard = () => {
-  const users = await getUsers();
-  // ...
-};
+export class ExampleRepositoryImpl implements ExampleRepository {
+  async fetchData(): Promise<ExampleData[]> {
+    const response = await fetch(`${this.baseUrl}/data`);
+    return await response.json();
+  }
+}
+```
 
-// ✅ Correto – Hook abstrai a origem dos dados
-import { useUsers } from '@/modules/user/hooks/useUser';
+**2. Hook (Logic Layer):**
 
-export const UserCard = () => {
-  const { users } = useUsers();
-  // ...
+```ts
+// src/modules/example-module/hooks/useExampleHook.ts
+import { exampleRepository } from '../service/exampleService';
+
+export function useExampleHook() {
+  const [data, setData] = useState<ExampleData[]>([]);
+
+  const fetchData = useCallback(async () => {
+    const result = await exampleRepository.fetchData(); // ✅ Hook usa Repository
+    setData(result);
+  }, []);
+
+  return { data, fetchData };
+}
+```
+
+**3. Component (UI Layer):**
+
+```ts
+// src/modules/example-module/components/ExampleComponent.tsx
+import { useExampleHook } from '../hooks/useExampleHook';
+
+export const ExampleComponent = () => {
+  const { data, fetchData } = useExampleHook(); // ✅ Component usa Hook
+
+  return (
+    <div>
+      {data.map(item => <div key={item.id}>{item.name}</div>)}
+      <button onClick={fetchData}>Refresh</button>
+    </div>
+  );
 };
 ```
 
-Dessa forma, se `userRepository` trocar `fetch` por GraphQL ou IndexedDB, **nenhum componente** precisará mudar.
+**Benefícios desta Arquitetura:**
+
+1. **Inversão de Dependência:** UI não conhece detalhes de como os dados são obtidos
+2. **Testabilidade:** Cada camada pode ser testada isoladamente
+3. **Flexibilidade:** Repository pode trocar `fetch` por GraphQL sem afetar UI
+4. **Manutenibilidade:** Mudanças em uma camada não propagam para outras
+
+**Exemplo de Mudança sem Impacto:**
+
+```ts
+// Se quisermos trocar fetch por GraphQL, só mudamos o Repository:
+export class GraphQLExampleRepository implements ExampleRepository {
+  async fetchData(): Promise<ExampleData[]> {
+    const result = await graphqlClient.query(GET_DATA_QUERY);
+    return result.data.items; // Mesma interface, implementação diferente
+  }
+}
+
+// Hook e Component continuam funcionando sem mudanças! 🎉
+```
 
 ## 🛠️ Scripts
 

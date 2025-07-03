@@ -1,5 +1,5 @@
-// Example service for the example-module
-// This demonstrates how to organize API calls and business logic
+// Example repository for the example-module
+// This demonstrates the Repository pattern for data access
 
 export interface ExampleData {
   id: string;
@@ -8,18 +8,13 @@ export interface ExampleData {
   createdAt: Date;
 }
 
-export class ExampleService {
-  private static instance: ExampleService;
+export interface ExampleRepository {
+  fetchData(): Promise<ExampleData[]>;
+  createData(data: Omit<ExampleData, 'id' | 'createdAt'>): Promise<ExampleData>;
+}
+
+export class ExampleRepositoryImpl implements ExampleRepository {
   private baseUrl = 'https://api.example.com';
-
-  private constructor() {}
-
-  public static getInstance(): ExampleService {
-    if (!ExampleService.instance) {
-      ExampleService.instance = new ExampleService();
-    }
-    return ExampleService.instance;
-  }
 
   async fetchData(): Promise<ExampleData[]> {
     try {
@@ -34,7 +29,9 @@ export class ExampleService {
     }
   }
 
-  async createData(data: Omit<ExampleData, 'id' | 'createdAt'>): Promise<ExampleData> {
+  async createData(
+    data: Omit<ExampleData, 'id' | 'createdAt'>,
+  ): Promise<ExampleData> {
     try {
       const response = await fetch(`${this.baseUrl}/data`, {
         method: 'POST',
@@ -54,4 +51,10 @@ export class ExampleService {
   }
 }
 
-export const exampleService = ExampleService.getInstance(); 
+// Factory function to create repository instance
+export const createExampleRepository = (): ExampleRepository => {
+  return new ExampleRepositoryImpl();
+};
+
+// Default export for convenience
+export const exampleRepository = createExampleRepository();

@@ -3,5 +3,10 @@
 
 export { ExampleComponent } from './components/ExampleComponent';
 export { useExampleHook } from './hooks/useExampleHook';
-export { exampleService } from './service/exampleService';
+export {
+  createExampleRepository,
+  exampleRepository,
+  type ExampleData,
+  type ExampleRepository,
+} from './service/exampleService';
 export * as exampleUtils from './utils/exampleUtils';
