@@ -1,0 +1,32 @@
+---
+description: Enforce layered architecture and Dependency Rule for this Webpack React boilerplate
+globs: src/**/*
+---
+
+# Architecture — Dependency Rule
+
+This project organizes code as:
+
+- `src/pages/` — composition root / routing (no heavy business logic)
+- `src/modules/<module>/` — feature modules with:
+  - `components/` — UI widgets
+  - `hooks/` — UI state / orchestration
+  - `service/` — repository / data access
+  - `utils/` — pure helpers
+  - `index.ts` — public API of the module
+- Shared: `src/components/`, `src/hooks/`, and other shared utilities
+
+## Dependency Rule (must follow)
+
+```
+pages → modules (components → hooks → service) → shared
+```
+
+- **components** must NOT import from `service/` (or call fetch/axios directly).
+- **hooks** may import `service/`; must NOT treat pages as business dependencies.
+- **service** must NOT import components, hooks, or pages.
+- Prefer consuming a module only through its `index.ts`.
+
+When editing files matching `src/**/*`, preserve this direction of dependencies.
+
+Note: active evolution of this stack lives in `react-vite-boilerplate`.

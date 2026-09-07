@@ -1,0 +1,12 @@
+---
+description: Safe editing practices for AI agents in this repository
+globs: src/**/*
+---
+
+# Safe edits
+
+- **No secrets:** never commit `.env`, tokens, API keys, or credentials. Use env examples only.
+- **Don't invent layers:** stay within existing structure — `pages/`, `modules/` (components, hooks, service, utils), and shared `components`/`hooks`/`utils`. Do not invent new top-level architecture folders without explicit request.
+- **Verify before done:** run `npm test` (or `npm run test`), `npm run lint`, and/or `npm run type-check` before claiming the task is complete.
+- Respect the Dependency Rule (components → hooks → service; pages compose modules) documented in `architecture.mdc` and `AGENTS.md`.
+- For greenfield work, prefer the actively evolved sibling: `react-vite-boilerplate`.
