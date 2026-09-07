@@ -164,6 +164,7 @@ export class ExampleRepositoryImpl implements ExampleRepository {
     return await response.json();
   }
 }
+```
 
 **2. Hook (Logic Layer):**
 
