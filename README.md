@@ -14,7 +14,7 @@ Um boilerplate moderno, minimalista e escalável para aplicações React com Typ
 - [🚀 Começando Rápido](#-começando-rápido)
 - [✨ Tecnologias](#-tecnologias)
 - [🏛️ Arquitetura em Camadas](#️-arquitetura-em-camadas)
-- [🤖 AI-assisted](#-ai-assisted)
+- [AI-assisted](#ai-assisted)
 - [🛠️ Scripts](#️-scripts)
 - [📁 Estrutura](#-estrutura)
 - [🤝 Contribuindo](#-contribuindo)
@@ -164,7 +164,6 @@ export class ExampleRepositoryImpl implements ExampleRepository {
     return await response.json();
   }
 }
-```
 
 **2. Hook (Logic Layer):**
 
@@ -223,20 +222,9 @@ export class GraphQLExampleRepository implements ExampleRepository {
 // Hook e Component continuam funcionando sem mudanças! 🎉
 ```
 
-## 🤖 AI-assisted
+## AI-assisted
 
-Este repositório inclui um pack para agentes de IA:
-
-- **[`AGENTS.md`](AGENTS.md)** — stack, Dependency Rule, comandos, Do/Don't e prompts prontos
-- **[`.cursor/rules/`](.cursor/rules/)** — regras Cursor (`architecture.mdc`, `safe-edits.mdc`) aplicadas em `src/**/*`
-
-> Evolução ativa: [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate).
-
-### Prompts prontos
-
-1. Criar módulo `X` em `src/modules/X` (components/hooks/service/utils) + teste
-2. Adicionar page `Y` só compondo o módulo (sem lógica de negócio)
-3. Refatorar `Z` para cumprir a Dependency Rule (component→hook→service)
+Agentes: leia [`AGENTS.md`](AGENTS.md) primeiro.
 
 ## 🛠️ Scripts
 
