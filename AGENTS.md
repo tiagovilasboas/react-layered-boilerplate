@@ -1,6 +1,7 @@
 # AGENTS.md — React Layered Boilerplate
 
-Guia curto para agentes de IA neste repositório.
+Contrato para qualquer agente de código (Cursor, Copilot, Claude Code, Kiro, etc.).
+Este arquivo é a **fonte da verdade** do contrato AI-assisted do repositório — independente do harness.
 
 > **Nota:** a evolução ativa deste stack é o [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate) (Vite + Mantine + Plop). Prefira-o para projetos novos.
 
@@ -52,3 +53,7 @@ Dependências para dentro:
 1. **Novo módulo:** "Crie o módulo `X` em `src/modules/X` (components, hooks, service, utils, index) seguindo UI→hooks→service + teste."
 2. **Nova page:** "Adicione a page `Y` em `src/pages/` só compondo o módulo, sem lógica de negócio."
 3. **Refator Dependency Rule:** "Refatore `Z` para component→hook→service, sem imports UI↔service."
+
+## Adapters (opcional)
+
+Harnesses podem ter adapters finos que apontam para este arquivo (ex.: `.cursor/rules/`, `.github/copilot-instructions.md`). Em caso de conflito, **prevalece `AGENTS.md`**.
