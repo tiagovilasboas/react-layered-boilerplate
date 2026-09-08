@@ -21,6 +21,7 @@
     "start": "webpack serve --config=configs/webpack/dev.js",
     "dev": "webpack serve --config=configs/webpack/dev.js",
     "test": "vitest --coverage",
+    "test:ci": "vitest run --coverage",
     "type-check": "tsc --noEmit",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
     "format": "prettier --write 'src/**/*.{js,ts,tsx,json,css,md}'"
@@ -67,7 +68,7 @@
     "react-router-dom": "^7.6.3"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": ">=20.0.0",
     "npm": ">=8.0.0"
   }
 }
