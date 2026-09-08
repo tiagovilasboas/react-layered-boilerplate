@@ -1,0 +1,39 @@
+name: Feature request
+description: Propose a focused improvement that fits pages → modules → shared.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Keep proposals aligned with [`AGENTS.md`](../../AGENTS.md). This repo is a lean layered starter, not a framework dump.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is missing or painful today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should change? Which layer (`pages`, `modules`, shared `components`/`hooks`, docs, CI)?
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Primary layer
+      options:
+        - Pages (composition / routing)
+        - Module (components / hooks / service / utils)
+        - Shared (src/components, src/hooks)
+        - Docs / templates
+        - Tooling / CI
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+      description: What this request is not (architecture rewrite, extra frameworks, etc.).
