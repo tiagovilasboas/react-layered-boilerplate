@@ -1,7 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { theme } from '@/pages/main/styles';
 
@@ -11,7 +11,35 @@ const renderWithTheme = (component: React.ReactElement) => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
 };
 
+const jsonResponse = (body: unknown): Response =>
+  ({
+    ok: true,
+    json: async () => body,
+  }) as Response;
+
 describe('ExampleComponent', () => {
+  beforeEach(() => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+        if (init?.method === 'POST') {
+          return jsonResponse({
+            id: '1',
+            name: 'New Item',
+            description: 'Created via component action',
+            createdAt: new Date().toISOString(),
+          });
+        }
+
+        return jsonResponse([]);
+      }),
+    );
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it('renders with title', () => {
     renderWithTheme(<ExampleComponent title="Test Title" />);
     expect(screen.getByText('Test Title')).toBeInTheDocument();
@@ -24,7 +52,7 @@ describe('ExampleComponent', () => {
     ).toBeInTheDocument();
   });
 
-  it('calls onAction when button is clicked', () => {
+  it('calls onAction when button is clicked', async () => {
     const mockOnAction = vi.fn();
     renderWithTheme(
       <ExampleComponent title="Test Title" onAction={mockOnAction} />,
@@ -33,7 +61,9 @@ describe('ExampleComponent', () => {
     const button = screen.getByRole('button');
     fireEvent.click(button);
 
-    expect(mockOnAction).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockOnAction).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('does not render button when onAction is not provided', () => {

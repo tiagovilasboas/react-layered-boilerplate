@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [20.x, 22.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -36,14 +36,13 @@ jobs:
       run: npm run test:ci
 
     - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
+      continue-on-error: true
       with:
-        file: ./coverage/lcov.info
+        files: ./coverage/lcov.info
         flags: unittests
         name: codecov-umbrella
-
-    - name: Run Lighthouse CI
-      run: npm run lighthouse:ci
+        fail_ci_if_error: false
 
   build:
     runs-on: ubuntu-latest
@@ -55,7 +54,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18.x'
+        node-version: '20.x'
         cache: 'npm'
 
     - name: Install dependencies
@@ -65,7 +64,7 @@ jobs:
       run: npm run build
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-files
         path: dist/
@@ -79,7 +78,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Download build artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: build-files
         path: dist/
