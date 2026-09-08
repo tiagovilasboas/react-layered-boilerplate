@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import { ExampleData, exampleRepository } from '../service/exampleService';
 
 export function useExampleHook() {
