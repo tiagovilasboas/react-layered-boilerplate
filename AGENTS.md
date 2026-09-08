@@ -9,7 +9,7 @@ Este arquivo é a **fonte da verdade** do contrato AI-assisted do repositório �
 
 - **React 19** + **TypeScript** + **Webpack 5**
 - **styled-components** · **Vitest** + Testing Library
-- Camadas: `pages/` · `modules/` · `shared` (components/hooks/utils)
+- Camadas: `pages/` · `modules/` · shared em `src/components/` e `src/hooks/` (não há `src/shared/`)
 - Módulo típico: `components/` · `hooks/` · `service/` · `utils/` · `index.ts`
 
 ## Dependency Rule
@@ -28,11 +28,12 @@ Dependências para dentro:
 
 | Comando | Uso |
 | --- | --- |
-| `npm run dev` | Dev server |
+| `npm run dev` / `npm start` | Dev server |
 | `npm run build` | Build produção |
-| `npm test` / `npm run test` | Vitest |
+| `npm test` / `npm run test` | Vitest (com coverage) |
 | `npm run lint` | ESLint |
 | `npm run type-check` | TypeScript |
+| `npm run format` | Prettier |
 
 ## Do
 
@@ -43,7 +44,7 @@ Dependências para dentro:
 
 ## Don't
 
-- Não inventar camadas fora de pages/modules/shared (components, hooks, service, utils).
+- Não inventar camadas fora de `pages/`, `modules/` e shared (`src/components`, `src/hooks`).
 - Não acoplar UI a fetch/API direto.
 - Não commitar secrets.
 - Não quebrar a Dependency Rule.
