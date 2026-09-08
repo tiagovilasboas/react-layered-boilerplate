@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Active Vite starter
+    url: https://github.com/tiagovilasboas/react-vite-boilerplate
+    about: Prefer this repo for new greenfield work (Vite + Mantine + Plop).
