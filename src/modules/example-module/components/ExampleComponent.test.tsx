@@ -1,9 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { theme } from '@/pages/main/styles';
+
+import { createExampleRepository } from '../service/exampleService';
 
 import { ExampleComponent } from './ExampleComponent';
 
@@ -11,45 +13,27 @@ const renderWithTheme = (component: React.ReactElement) => {
   return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
 };
 
-const jsonResponse = (body: unknown): Response =>
-  ({
-    ok: true,
-    json: async () => body,
-  }) as Response;
-
 describe('ExampleComponent', () => {
-  beforeEach(() => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
-        if (init?.method === 'POST') {
-          return jsonResponse({
-            id: '1',
-            name: 'New Item',
-            description: 'Created via component action',
-            createdAt: new Date().toISOString(),
-          });
-        }
-
-        return jsonResponse([]);
-      }),
-    );
-  });
-
   afterEach(() => {
-    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
-  it('renders with title', () => {
+  it('renders with title', async () => {
     renderWithTheme(<ExampleComponent title="Test Title" />);
     expect(screen.getByText('Test Title')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
+    });
   });
 
-  it('renders description text', () => {
+  it('renders description text', async () => {
     renderWithTheme(<ExampleComponent title="Test Title" />);
     expect(
       screen.getByText('This is an example component from the example-module.'),
     ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
+    });
   });
 
   it('calls onAction when button is clicked', async () => {
@@ -58,7 +42,7 @@ describe('ExampleComponent', () => {
       <ExampleComponent title="Test Title" onAction={mockOnAction} />,
     );
 
-    const button = screen.getByRole('button');
+    const button = await screen.findByRole('button');
     fireEvent.click(button);
 
     await waitFor(() => {
@@ -66,8 +50,17 @@ describe('ExampleComponent', () => {
     });
   });
 
-  it('does not render button when onAction is not provided', () => {
+  it('does not render button when onAction is not provided', async () => {
     renderWithTheme(<ExampleComponent title="Test Title" />);
+    await waitFor(() => {
+      expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
+    });
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+
+  it('createExampleRepository is the DI seam used by the module', () => {
+    const repository = createExampleRepository({ kind: 'memory' });
+    expect(repository).toHaveProperty('fetchData');
+    expect(repository).toHaveProperty('createData');
   });
 });

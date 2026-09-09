@@ -7,6 +7,9 @@ const Main = styled.div`
   text-align: center;
 
   width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 `;
 
 export { Main };

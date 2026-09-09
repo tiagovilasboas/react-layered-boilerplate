@@ -5,7 +5,7 @@ labels: ["bug"]
 body:
   - type: markdown
     attributes:
-      value: Search existing issues first. For new products, consider [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate).
+      value: Search existing issues first. This repo is the Webpack-era layered reference. For new products, use [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate).
   - type: textarea
     id: summary
     attributes:

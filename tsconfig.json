@@ -23,18 +23,9 @@
     "baseUrl": "src",
     "outDir": "dist",
     "paths": {
-      "@/*": ["*"],
-      "@/components/*": ["components/*"],
-      "@/hooks/*": ["hooks/*"],
-      "@/contexts/*": ["contexts/*"],
-      "@/modules/*": ["modules/*"],
-      "@/pages/*": ["pages/*"],
-      "@/services/*": ["services/*"],
-      "@/shared/*": ["shared/*"],
-      "@/utils/*": ["utils/*"],
-      "@/layout/*": ["layout/*"]
+      "@/*": ["*"]
     },
-    "types": ["jest", "node"]
+    "types": ["vitest/globals", "node"]
   },
   "include": [
     "src/**/*",
@@ -48,7 +39,6 @@
     "node_modules",
     "dist",
     "build",
-    "coverage",
-    "storybook-static"
+    "coverage"
   ]
 }

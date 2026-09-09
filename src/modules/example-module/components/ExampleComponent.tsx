@@ -15,6 +15,7 @@ const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.grey};
   border-radius: 8px;
   margin: 10px 0;
+  text-align: left;
 `;
 
 const Title = styled.h3`

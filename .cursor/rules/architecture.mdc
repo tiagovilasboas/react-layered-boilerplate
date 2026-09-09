@@ -14,3 +14,4 @@ Essentials for `src/**/*`:
 - Hooks may call service; service must not import UI/pages
 - Expose modules via `index.ts` only
 - Prefer sibling `react-vite-boilerplate` for greenfield work
+- Do not invent `@/shared`, `@/contexts`, or `@/services` aliases
