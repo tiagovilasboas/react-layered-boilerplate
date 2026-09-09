@@ -3,14 +3,15 @@
 Contrato para qualquer agente de código (Cursor, Copilot, Claude Code, Kiro, etc.).
 Este arquivo é a **fonte da verdade** do contrato AI-assisted do repositório — independente do harness.
 
-> **Nota:** a evolução ativa deste stack é o [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate) (Vite + Mantine + Plop). Prefira-o para projetos novos.
+> **Nota:** este é o starter **Webpack-era**. A evolução ativa é o [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate) (Vite + Mantine + Plop). Prefira-o para projetos novos. Não tente feature-parity com o sibling Vite.
 
 ## Stack
 
-- **React 19** + **TypeScript** + **Webpack 5**
-- **styled-components** · **Vitest** + Testing Library
+- **React 19** + **TypeScript** (`strict`) + **Webpack 5** (React é bundled; sem CDN/UMD)
+- **styled-components** · **Vitest** + Testing Library · **Node 20+**
 - Camadas: `pages/` · `modules/` · shared em `src/components/` e `src/hooks/` (não há `src/shared/`)
 - Módulo típico: `components/` · `hooks/` · `service/` · `utils/` · `index.ts`
+- Referência viva: `src/modules/example-module` (UI → hook → `createExampleRepository()`)
 
 ## Dependency Rule
 
@@ -20,17 +21,18 @@ Dependências para dentro:
 
 - **Pages** — composition/roteamento; sem lógica de negócio pesada.
 - **components** — UI; **não** importam `service/` direto.
-- **hooks** — estado/UI; podem chamar `service/`.
-- **service** — repository/API; **não** importam UI/pages.
+- **hooks** — estado/UI; podem chamar `service/` (aceitar o repositório por parâmetro).
+- **service** — repository/API (DTO ⇄ model); **não** importam UI/pages.
 - Expor módulo só via `index.ts`.
+- Alias único `@/` → `src/`. Não inventar `@/shared`, `@/contexts`, `@/services`.
 
 ## Comandos
 
 | Comando | Uso |
 | --- | --- |
-| `npm run dev` / `npm start` | Dev server |
+| `npm run dev` / `npm start` | Dev server (http://localhost:8080) |
 | `npm run build` | Build produção |
-| `npm test` / `npm run test` | Vitest (com coverage) |
+| `npm test` / `npm run test:ci` | Vitest uma vez, com coverage |
 | `npm run lint` | ESLint |
 | `npm run type-check` | TypeScript |
 | `npm run format` | Prettier |
@@ -48,6 +50,7 @@ Dependências para dentro:
 - Não acoplar UI a fetch/API direto.
 - Não commitar secrets.
 - Não quebrar a Dependency Rule.
+- Não portar Mantine / Plop / i18n / PWA do sibling Vite para cá.
 
 ## Prompts prontos
 
