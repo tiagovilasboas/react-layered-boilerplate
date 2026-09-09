@@ -4,7 +4,6 @@ const { resolve } = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const commonConfig = require('./common');
 
@@ -47,12 +46,6 @@ module.exports = merge(commonConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
-    // Bundle Analyzer - descomente para analisar o bundle
-    // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static',
-    //   openAnalyzer: false,
-    //   reportFilename: 'bundle-report.html',
-    // }),
   ],
   performance: {
     hints: 'warning',

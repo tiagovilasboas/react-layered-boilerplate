@@ -2,10 +2,12 @@
 
 Thanks for helping improve this boilerplate. Changes should stay documentation-accurate and respect the layered architecture — do not invent extra layers or couple UI to fetch/API.
 
+This repo is the Webpack-era layered-architecture reference. For greenfield work, prefer [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate). Do not chase feature-parity with that sibling.
+
 ## Prerequisites
 
-- Node.js 20 (`.nvmrc`; `v20.12.0`)
-- npm 8+ (`package.json` engines)
+- Node.js 20+ (`.nvmrc` is `v20.12.0`; CI matrix is 20.x and 22.x)
+- npm 10+ (`package.json` engines)
 
 ```bash
 git clone https://github.com/tiagovilasboas/react-layered-boilerplate.git
@@ -17,7 +19,7 @@ npm install
 
 The repository default is **`develop`**. Open pull requests against `develop`.
 
-A `master` branch exists (protected). There is no `main` branch today. GitHub Actions is configured for `main` and `develop`; do not assume `main` is the integration branch unless the default is changed.
+A `master` branch exists (protected). There is no `main` branch today. GitHub Actions runs on `develop` and `master`.
 
 ## Architecture contract
 
@@ -26,12 +28,14 @@ Read [`AGENTS.md`](AGENTS.md) before changing `src/`.
 - Direction: `pages` → `modules` (`components` → `hooks` → `service`) → shared (`src/components`, `src/hooks`)
 - Pages compose only
 - Components must not import `service/` or call `fetch` / HTTP clients
-- Hooks may call `service/`
+- Hooks may call `service/` (prefer injecting the repository)
 - Services (repositories) must not import UI or pages
 - Expose a module only via its `index.ts`
 - Do not commit secrets
 
 New features belong in `src/modules/<name>/` with `components/`, `hooks/`, `service/`, `utils/`, and `index.ts`.
+
+The canonical example is `src/modules/example-module`, composed from `src/pages/main/app.tsx`.
 
 ## Local checks
 
@@ -50,7 +54,9 @@ npm run build
 npm run format
 ```
 
-CI (`.github/workflows/ci.yml`) also targets lint, type-check, tests, and build. Prefer the scripts above locally — they are the ones defined in `package.json`.
+`npm test` and `npm run test:ci` both run Vitest once with coverage. Use `npm run test:watch` for watch mode.
+
+CI (`.github/workflows/ci.yml`) runs lint, type-check, tests, and build.
 
 ## Pull requests
 

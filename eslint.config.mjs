@@ -11,6 +11,9 @@ import vitest from 'eslint-plugin-vitest';
 export default [
   js.configs.recommended,
   {
+    ignores: ['dist/**', 'coverage/**', 'node_modules/**', 'configs/**'],
+  },
+  {
     files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
       parser: tsParser,
@@ -53,13 +56,11 @@ export default [
       },
     },
     rules: {
-      // Merge recommended rules
       ...reactPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       ...tsPlugin.configs.recommended.rules,
       ...importPlugin.configs.recommended.rules,
       ...vitest.configs.recommended.rules,
-      // Custom overrides similar to old config
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',

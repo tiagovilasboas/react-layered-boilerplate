@@ -2,20 +2,15 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
+const src = path.join(__dirname, '../../src');
+
 module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      '@': path.join(__dirname, '../../src'),
-      '@/components': path.join(__dirname, '../../src/components'),
-      '@/hooks': path.join(__dirname, '../../src/hooks'),
-      '@/contexts': path.join(__dirname, '../../src/contexts'),
-      '@/modules': path.join(__dirname, '../../src/modules'),
-      '@/pages': path.join(__dirname, '../../src/pages'),
-      '@/services': path.join(__dirname, '../../src/services'),
-      '@/shared': path.join(__dirname, '../../src/shared'),
-      '@/utils': path.join(__dirname, '../../src/utils'),
-      '@/layout': path.join(__dirname, '../../src/layout'),
+      // Single alias. Extra "@/<layer>" keys implied layers that do not exist
+      // (contexts, services, shared, layout) and contradicted AGENTS.md.
+      '@': src,
     },
   },
   module: {
@@ -48,16 +43,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './template.html.ejs',
       favicon: './src/assets/img/react_logo.svg',
-      meta: {
-        viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
-        'theme-color': '#000000',
-      },
     }),
   ],
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  },
   performance: {
     hints: false,
   },

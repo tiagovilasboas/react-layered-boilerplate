@@ -6,7 +6,9 @@ export { useExampleHook } from './hooks/useExampleHook';
 export {
   createExampleRepository,
   exampleRepository,
+  type CreateExampleRepositoryOptions,
   type ExampleData,
   type ExampleRepository,
+  type ExampleRepositoryKind,
 } from './service/exampleService';
 export * as exampleUtils from './utils/exampleUtils';
