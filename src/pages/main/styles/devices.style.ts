@@ -5,6 +5,6 @@ export const device = {
   mobileM: `(min-width: ${theme.breakpoints.mobileM})`,
   mobileL: `(min-width: ${theme.breakpoints.mobileL})`,
   tablet: `(min-width: ${theme.breakpoints.tablet})`,
-  tableL: `(min-width: ${theme.breakpoints.laptop})`,
+  tableL: `(min-width: ${theme.breakpoints.tabletL})`,
   desktop: `(min-width: ${theme.breakpoints.desktop})`,
 };

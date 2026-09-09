@@ -1,0 +1,13 @@
+---
+description: Cursor adapter - follow AGENTS.md (safe edits)
+globs: src/**/*
+---
+
+# Safe edits (adapter)
+
+**Primary source:** [`AGENTS.md`](../../AGENTS.md).
+
+- No secrets (`.env`, tokens, keys)
+- Stay within `pages/`, `modules/` (components, hooks, service, utils), shared
+- Run `test` / `lint` / `type-check` before claiming done
+- Never break the Dependency Rule in `AGENTS.md`

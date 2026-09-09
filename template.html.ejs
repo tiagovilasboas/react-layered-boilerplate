@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
     <head>
         <meta charset="UTF-8"/>
-        <meta http-equiv="Content-Language" content="pt-br">
+        <meta http-equiv="Content-Language" content="pt-BR">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="React Layered Architecture Boilerplate - Modern, scalable frontend architecture">
+        <meta name="keywords" content="react, typescript, webpack, boilerplate, layered-architecture">
+        <meta name="author" content="Tiago Vilas Boas">
+        <meta name="theme-color" content="#000000">
+
         <title>React Layered Architecture Boilerplate</title>
     </head>
     <body>
-        <div id="main"></div>
-
-        <!-- Dependencies with Oficial CDN Links -->
-        <!-- https://pt-br.reactjs.org/docs/cdn-links.html#gatsby-focus-wrapper -->
-        <% if (webpackConfig.mode == 'production') { %>
-        <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-        <% } else { %>
-        <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-        <% } %>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <!-- React 19 is bundled by Webpack (no UMD/CDN). React 19 dropped UMD builds. -->
     </body>
 </html>

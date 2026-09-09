@@ -1,20 +1,25 @@
-import * as React from 'react';
-import { hot } from 'react-hot-loader';
+import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { theme, GlobalStyle } from './styles';
+
+import ReactLogo from '@/assets/img/react_logo.svg';
+import { ExampleComponent } from '@/modules/example-module';
+
+import { GlobalStyle, theme } from './styles';
 import { Main } from './styles/app.style';
-import FrontEndIcon from '@/assets/icons/front-end-icon.gif';
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Main>
-        <h2>Truth can only be found in one place: the code.</h2>
-        <img src={FrontEndIcon} />
+        <h1>React Layered Architecture Boilerplate</h1>
+        <p>Feito de dev para dev, com carinho ❤️</p>
+        <img src={ReactLogo} alt="React logo" width={96} height={96} />
+        <p>Page composition of example-module (UI → hook → repository).</p>
+        <ExampleComponent title="example-module" onAction={() => undefined} />
       </Main>
     </ThemeProvider>
   );
 };
 
-export default hot(module)(App);
+export default App;

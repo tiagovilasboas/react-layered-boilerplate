@@ -1,0 +1,17 @@
+---
+description: Cursor adapter - follow AGENTS.md (Dependency Rule)
+globs: src/**/*
+---
+
+# Architecture (adapter)
+
+**Primary source:** [`AGENTS.md`](../../AGENTS.md). Follow it for any coding agent.
+
+Essentials for `src/**/*`:
+
+- Direction: `pages` -> `modules` (`components` -> `hooks` -> `service`) -> shared
+- Components must not import `service/` or call fetch/axios directly
+- Hooks may call service; service must not import UI/pages
+- Expose modules via `index.ts` only
+- Prefer sibling `react-vite-boilerplate` for greenfield work
+- Do not invent `@/shared`, `@/contexts`, or `@/services` aliases

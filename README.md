@@ -1,97 +1,121 @@
-## React Layered Architecture Boilerplate
+# React Layered Boilerplate
 
-Arquitetura client-side escalável, distribuída em camadas, com o objetivo de promover uma arquitetura front-end que favoreça a reusabilidade de código, coesão, independência de tecnologia e testabilidade. .
+[![Node.js](https://img.shields.io/badge/Node.js-20-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## Stacks
+Enterprise-oriented **Webpack-era** React starter for teams that want **layered architecture**, **repository-style dependency inversion**, **TypeScript `strict`**, **Vitest**, and **GitHub Actions CI** — without a kitchen-sink framework dump.
 
----
+This is the older sibling. **New products should start from** [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate) (Vite + Mantine + Plop). Keep this repo when you need the Webpack 5 + `pages/` + `modules/` reference.
 
-- [React](https://facebook.github.io/react/) (17.x)
-- [Webpack](https://webpack.js.org/) (5.x)
-- [Typescript](https://www.typescriptlang.org/) (4.x)
-- [Hot Module Replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/) ([React Hot Loader](https://github.com/gaearon/react-hot-loader))
-- Build p/ produção (Webpack)
-- [Styled-components](https://styled-components.com/docs/) (com autoprefixer p/ cross-browser)
-- Estabilização de código com ([ESLint](https://github.com/eslint/eslint)) e formatação com ([Prettier](https://github.com/prettier/prettier))
-- Testes unitários com ([Jest](https://facebook.github.io/jest/)) e testes em componentes com [DOM Test Library](https://testing-library.com/docs/)
-- Análise de commits ([Husky](https://typicode.github.io/husky/#/))
-- Servidor Web ([Express](https://expressjs.com/pt-br/))
+**Who it is for:** frontend squads that treat pages as composition roots, isolate features in modules (`components → hooks → service`), and keep shared UI/hooks reusable.
 
-## Regra de dependência
+<details>
+<summary>Português</summary>
 
----
+Starter React (era Webpack) com arquitetura em camadas, inversão de dependência via repositório, TypeScript strict, testes e CI. Páginas só compostas; features em módulos. Para projetos novos, prefira o [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate).
 
-![img](https://i.imgur.com/nkpyvgT.png)
+</details>
 
-## Proposta de Arquitetura
+## Start
 
----
+Requires [Node.js](https://nodejs.org/) **20+** (`.nvmrc` is `v20.12.0`; CI also runs 22). `package.json` engines: `node >=20`, `npm >=10`.
 
-Pensando na escalabilidade do projeto, sem trazer complicações e Over engineering, pensei em trazer um modelo de arquitetura para o frontend do boilerplate.
-Indo direto ao ponto, esse é o modelo:
-
-```javascript
-src
-├── components  # Componentes globais de uso geral do projeto.
-├── layout      # Wrappers padrões para componentes ou páginas.
-├── hooks       # Hooks globais de uso geral do projeto.
-├── contexts    # Contexts para gerenciamento de estado global do projeto.
-├── modules     # Módulos. Um para cada página, com a lógica de negócio.
-│    └─ example-module
-│         ├──  index.js/ts  # Ponto de partida desse módulo.
-│         ├──  hooks        # Hooks globais de uso exclusivo desse módulo.
-│         ├──  components   # Componentes de uso exclusivo desse módulo.
-│         ├──  service      # Funções e lógicas de utilização geral e genérica
-│         └──  utils        # Componentes de uso exclusivo desse módulo.
-├── pages       # Cada página associada com uma rota e um módulo.
-├── services    # Lógica de comunicação com o backend.
-├── shared      # Tudo que for compartilhável. Sendo configuração de temas, etc.
-└── utils       # Funções e lógicas de utilização geral e genérica.
+```bash
+git clone https://github.com/tiagovilasboas/react-layered-boilerplate.git
+cd react-layered-boilerplate
+npm install
+npm run dev
 ```
 
-Obs: Essa estrutura interna aos Módulos é opcional e pode ser criada mediante necessidade, precisando inicialmente só do index.js/ts§
+Dev server: [http://localhost:8080](http://localhost:8080). React 19 is **bundled** by Webpack (React 19 has no UMD build — do not load it from a CDN).
 
-## Instalação
+| Command | What it does |
+| --- | --- |
+| `npm run dev` / `npm start` | Webpack 5 dev server |
+| `npm run build` | Production bundle (`dist/`) |
+| `npm test` / `npm run test:ci` | Vitest once, with coverage |
+| `npm run test:watch` | Vitest watch + coverage |
+| `npm run lint` | ESLint on `src/**/*.{js,ts,tsx}` |
+| `npm run type-check` | `tsc --noEmit` |
+| `npm run format` | Prettier write on `src/` |
 
----
+## Architecture
 
-1. Clone/download do repositório
-2. `npm install typescript -g` (p/ desenvolvimento)
-3. `npm install`
+Dependencies point inward:
 
-## Como usar
+`Pages` → `Modules (components → hooks → service)` → shared (`src/components`, `src/hooks`)
 
----
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│    Page     │───▶│  Component  │───▶│    Hook     │───▶│ Repository  │
+│ composition │    │     UI      │    │  UI state   │    │  API / I/O  │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+```
 
-**Desenvolvimento**
+- **Pages** — routing and composition. No heavy business logic. `src/pages/main/app.tsx` composes `ExampleComponent` from the module public API.
+- **Modules** — feature folders. UI does not import `service/` directly; hooks may. Services are repositories (DTO ⇄ model) and must not import UI or pages.
+- **Shared** — reusable UI and hooks under `src/components/` and `src/hooks/` (there is no `src/shared/` directory).
+- Each module exposes a public surface via `index.ts`.
 
-`npm run start`
+Example module:
 
-- "Build" do app (HMR habilitado)
-- @ `http://localhost:8080`
+```
+src/modules/example-module/
+├── components/
+├── hooks/
+├── service/          # repository + factory (DI seam)
+├── utils/
+└── index.ts          # public re-exports
+```
 
-**Produção**
+`createExampleRepository()` is the seam. Default is **in-memory** so the demo runs without a backend. Swap to HTTP (or your own impl) without changing hooks or UI:
 
-`npm run prod`
+```ts
+import { createExampleRepository } from '@/modules/example-module';
 
-- "Build" do app (HMR desabilitado) em `/dist/`
-- @ `http://localhost:8888`
+const demo = createExampleRepository(); // kind: 'memory'
+const api = createExampleRepository({
+  kind: 'http',
+  baseUrl: 'https://api.example.com',
+});
+```
 
----
+Inject the port into `useExampleHook(repository)` in tests. The running page uses the module default.
 
-**Comandos**
+### Layout
 
-| Comando            | Descrição                                                                       |
-| ------------------ | ------------------------------------------------------------------------------- |
-| `npm run dev`      | Sobe a "app" com hot reload e serve em @ `http://localhost:8080`                |
-| `npm run prod`     | Empacota a "app" para produção em `/dist/` e serve em @ `http://localhost:8888` |
-| `npm run build`    | Empacota a "app" `/dist/`                                                       |
-| `npm run test`     | Dispara a rotina de testes                                                      |
-| `npm run test:dev` | Dispara a rotina de testes com "watch reload"                                   |
-| `npm run lint`     | Roda o analisador de código (eslint)                                            |
-| `npm run lint:fix` | Roda o analisador de código e corrige as "issues"                               |
-| `npm run start`    | ("alias" para `npm run dev`)                                                    |
+```
+src/
+├── pages/                 # composition root
+├── modules/               # features
+│   └── example-module/
+├── components/            # shared UI
+├── hooks/                 # shared hooks
+├── assets/
+├── types/
+└── setupTests.ts
+configs/webpack/           # common / dev / prod
+vitest.config.ts
+eslint.config.mjs          # ESLint 9 flat config
+```
 
----
+Import alias `@/` maps to `src/` (TypeScript + Webpack + Vitest). There are no extra aliases for layers that do not exist.
 
-**Nota**: caso tenha preferência em usar o `yarn`, substituía o `npm` para `yarn` no `package.json`, .
+```ts
+import { Button } from '@/components/Button';
+import { ExampleComponent } from '@/modules/example-module';
+```
+
+## AI-assisted development
+
+Coding agents (Cursor, Copilot, and others) should read [`AGENTS.md`](AGENTS.md) first. That file is the contract: stack, Dependency Rule, commands, and ready-made prompts. Thin harness adapters (`.cursor/rules/`, `.github/copilot-instructions.md`) defer to it.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Default branch today is `develop`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
