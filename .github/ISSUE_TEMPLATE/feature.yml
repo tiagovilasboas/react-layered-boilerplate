@@ -5,7 +5,7 @@ labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
-      value: Keep proposals aligned with [`AGENTS.md`](../../AGENTS.md). This repo is a lean layered starter, not a framework dump.
+      value: Keep proposals aligned with [`AGENTS.md`](../../AGENTS.md). This is the Webpack-era layered starter — not a framework dump and not a port of [react-vite-boilerplate](https://github.com/tiagovilasboas/react-vite-boilerplate).
   - type: textarea
     id: problem
     attributes:
