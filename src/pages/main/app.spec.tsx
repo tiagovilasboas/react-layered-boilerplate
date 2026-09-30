@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import App from './app';
 
@@ -14,5 +14,16 @@ describe('App', () => {
     await waitFor(() => {
       expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
     });
+  });
+
+  test('creates an item through the composed example module action', async () => {
+    render(<App />);
+    await waitFor(() => {
+      expect(screen.queryByText('Loading data...')).not.toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Create New Item' }));
+
+    expect(await screen.findByText('New Item')).toBeInTheDocument();
   });
 });
