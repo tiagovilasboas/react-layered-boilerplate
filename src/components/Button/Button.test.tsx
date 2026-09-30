@@ -30,4 +30,19 @@ describe('Button', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Save' }));
     expect(onClick).not.toHaveBeenCalled();
   });
+
+  it('applies the large size and secondary variant styles from the theme', () => {
+    renderButton(
+      <Button size="large" variant="secondary">
+        Big
+      </Button>,
+    );
+
+    expect(screen.getByRole('button', { name: 'Big' })).toHaveStyle({
+      padding: '16px 32px',
+      fontSize: theme.fontSizes.large,
+      backgroundColor: theme.colors.grey,
+      color: theme.colors.white,
+    });
+  });
 });
