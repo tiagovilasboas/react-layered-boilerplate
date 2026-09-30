@@ -20,7 +20,7 @@ Starter React (era Webpack) com arquitetura em camadas, inversão de dependênci
 
 ## Start
 
-Requires [Node.js](https://nodejs.org/) **20+** (`.nvmrc` is `v20.12.0`; CI also runs 22). `package.json` engines: `node >=20`, `npm >=10`.
+Requires [Node.js](https://nodejs.org/) **20.19+ or 22.12+** (`.nvmrc` is `v20.19.0`; CI also runs 22). `package.json` engines: `node ^20.19.0 || >=22.12.0`, `npm >=10`.
 
 ```bash
 git clone https://github.com/tiagovilasboas/react-layered-boilerplate.git
