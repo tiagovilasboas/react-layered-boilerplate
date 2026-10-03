@@ -1,6 +1,6 @@
 # React Layered Boilerplate
 
-[![Node.js](https://img.shields.io/badge/Node.js-20-green.svg)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -20,7 +20,7 @@ Starter React (era Webpack) com arquitetura em camadas, inversão de dependênci
 
 ## Start
 
-Requires [Node.js](https://nodejs.org/) **20.19+ or 22.12+** (`.nvmrc` is `v20.19.0`; CI also runs 22). `package.json` engines: `node ^20.19.0 || >=22.12.0`, `npm >=10`.
+Requires [Node.js](https://nodejs.org/) **22.15+** (`.nvmrc` is `v22.15.0`; CI runs 22). `package.json` engines: `node >=22.15.0`, `npm >=10`.
 
 ```bash
 git clone https://github.com/tiagovilasboas/react-layered-boilerplate.git
