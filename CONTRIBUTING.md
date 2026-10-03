@@ -6,7 +6,7 @@ This repo is the Webpack-era layered-architecture reference. For greenfield work
 
 ## Prerequisites
 
-- Node.js 20.19+ or 22.12+ (`.nvmrc` is `v20.19.0`; CI matrix is 20.x and 22.x)
+- Node.js 22.15+ (`.nvmrc` is `v22.15.0`; CI runs 22.x)
 - npm 10+ (`package.json` engines)
 
 ```bash

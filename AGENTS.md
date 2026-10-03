@@ -8,7 +8,7 @@ Este arquivo é a **fonte da verdade** do contrato AI-assisted do repositório �
 ## Stack
 
 - **React 19** + **TypeScript** (`strict`) + **Webpack 5** (React é bundled; sem CDN/UMD)
-- **styled-components** · **Vitest** + Testing Library · **Node 20+**
+- **styled-components** · **Vitest** + Testing Library · **Node 22.15+**
 - Camadas: `pages/` · `modules/` · shared em `src/components/` e `src/hooks/` (não há `src/shared/`)
 - Módulo típico: `components/` · `hooks/` · `service/` · `utils/` · `index.ts`
 - Referência viva: `src/modules/example-module` (UI → hook → `createExampleRepository()`)
