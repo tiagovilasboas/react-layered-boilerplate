@@ -20,7 +20,8 @@ export function useExampleHook(
   repository: ExampleRepository = exampleRepository,
 ): UseExampleHookResult {
   const [data, setData] = useState<ExampleData[]>([]);
-  const [loading, setLoading] = useState(false);
+  // Starts as true because the effect below loads data on mount.
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
@@ -54,9 +55,29 @@ export function useExampleHook(
     [repository],
   );
 
+  // Initial load: state is only set from promise callbacks (not synchronously
+  // in the effect body), and stale responses are ignored after cleanup.
   useEffect(() => {
-    void fetchData();
-  }, [fetchData]);
+    let ignore = false;
+    repository
+      .fetchData()
+      .then(
+        (result) => {
+          if (!ignore) setData(result);
+        },
+        (err: unknown) => {
+          if (!ignore) {
+            setError(err instanceof Error ? err.message : 'Unknown error');
+          }
+        },
+      )
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+    return () => {
+      ignore = true;
+    };
+  }, [repository]);
 
   return {
     data,
