@@ -1,12 +1,19 @@
+import { createRequire } from 'node:module';
+
 import js from '@eslint/js';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import importPlugin from 'eslint-plugin-import';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
+import vitest from '@vitest/eslint-plugin';
+import importPlugin from 'eslint-plugin-import-x';
 import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import vitest from 'eslint-plugin-vitest';
+
+// eslint-plugin-react's `version: 'detect'` calls context.getFilename(),
+// which ESLint 10 removed, so resolve the installed React version here.
+const { version: reactVersion } = createRequire(import.meta.url)(
+  'react/package.json',
+);
 
 export default [
   js.configs.recommended,
@@ -41,14 +48,13 @@ export default [
       '@typescript-eslint': tsPlugin,
       react: reactPlugin,
       'react-hooks': reactHooks,
-      import: importPlugin,
-      'jsx-a11y': jsxA11y,
+      'import-x': importPlugin,
       prettier: prettierPlugin,
       vitest,
     },
     settings: {
-      react: { version: 'detect' },
-      'import/resolver': {
+      react: { version: reactVersion },
+      'import-x/resolver': {
         typescript: {
           alwaysTryTypes: true,
           project: './tsconfig.json',
@@ -59,7 +65,7 @@ export default [
       ...reactPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       ...tsPlugin.configs.recommended.rules,
-      ...importPlugin.configs.recommended.rules,
+      ...importPlugin.flatConfigs.recommended.rules,
       ...vitest.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/no-unused-vars': [
@@ -69,7 +75,7 @@ export default [
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'error',
       'prefer-const': 'error',
-      'import/order': [
+      'import-x/order': [
         'error',
         {
           groups: [
