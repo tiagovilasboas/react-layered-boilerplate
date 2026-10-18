@@ -40,7 +40,8 @@ describe('Button', () => {
 
     expect(screen.getByRole('button', { name: 'Big' })).toHaveStyle({
       padding: '16px 32px',
-      fontSize: theme.fontSizes.large,
+      // theme.fontSizes.large is 1.5rem; jsdom 30 computes rem to px.
+      fontSize: '24px',
       backgroundColor: theme.colors.grey,
       color: theme.colors.white,
     });
