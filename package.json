@@ -30,7 +30,7 @@
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.3.1",
-    "styled-components": "^6.5.3"
+    "styled-components": "^6.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
